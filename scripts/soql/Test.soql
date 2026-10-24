@@ -1,0 +1,131 @@
+
+// ========================================================
+// SALESFORCE SOQL AND SOSL PRACTICE
+// Objects: Account, Consultant__c, Position__c, Hiring__c, Contact
+// ========================================================
+
+
+// ======================== SOQL ==========================
+
+
+// Q1. Select Consultant Name, DOB, and Sex
+// where Last Name starts with 'S'
+
+SELECT Name, DOB__c, Sex__c
+FROM Consultant__c
+WHERE Last_Name__c LIKE 'S%';
+
+
+// Q2. Select all Consultants where Education is BE
+
+SELECT FIELDS(ALL)
+FROM Consultant__c
+WHERE Education__c = 'BE'
+LIMIT 200;
+
+
+// Q3. Select all Consultants and their Education
+
+SELECT Name, Education__c
+FROM Consultant__c;
+
+
+// Q4. Select all Employers with their open Positions in a subquery
+
+SELECT Id, Name, Domain__c,
+    (
+        SELECT Id, Name
+        FROM Positions__r
+        WHERE Status__c = 'Open'
+    )
+FROM Account;
+
+
+// Q5. Select all Consultants who are married
+
+SELECT Id, Name, Sex__c, Married__c
+FROM Consultant__c
+WHERE Married__c = TRUE;
+
+
+// Q6. Select all Consultants whose DOB is after the year 2000
+
+SELECT Id, Name, DOB__c
+FROM Consultant__c
+WHERE CALENDAR_YEAR(DOB__c) > 2000;
+
+
+// Q7. Select all Employers with Positions whose names start with 'S'
+
+SELECT Id, Name, Domain__c,
+    (
+        SELECT Id, Name
+        FROM Positions__r
+        WHERE Name LIKE 'S%'
+    )
+FROM Account;
+
+
+// Q8. Select all Consultants working with Employer 'TV'
+
+SELECT Id, Name
+FROM Consultant__c
+WHERE Id IN (
+    SELECT Consultant__c
+    FROM Hiring__c
+    WHERE Employer__r.Name = 'TV'
+);
+
+
+// Q9. Select all Consultants and their Employers
+// who are working on the Position 'Software Engineer'
+
+SELECT Id, Name,
+    (
+        SELECT Employer__r.Id,
+               Employer__r.Name,
+               Position__r.Name
+        FROM Hirings__r
+        WHERE Position__r.Name = 'Software Engineer'
+    )
+FROM Consultant__c;
+
+
+// Q10. Count Hiring records per Employer
+
+SELECT Employer__c,
+       Employer__r.Name,
+       COUNT(Consultant__c)
+FROM Hiring__c
+GROUP BY Employer__c, Employer__r.Name;
+
+
+// Q11. Count Consultants by birth month, sorted by month
+
+SELECT CALENDAR_MONTH(DOB__c) Month,
+       COUNT(Id) CountMonth
+FROM Consultant__c
+WHERE DOB__c != NULL
+GROUP BY CALENDAR_MONTH(DOB__c)
+ORDER BY CALENDAR_MONTH(DOB__c);
+
+
+// ======================== SOSL ==========================
+
+
+// Q1. Find all persons named John
+// (Consultants and HR Contacts)
+
+FIND {John} IN ALL FIELDS
+RETURNING
+    Contact(Id, Name),
+    Consultant__c(Id, Name);
+
+
+// Q2. Find male Consultants named John and matching HR Contacts
+// Note: Contact has no Sex field, so HR Contacts are not gender-filtered.
+
+FIND {John} IN ALL FIELDS
+RETURNING
+    Consultant__c(Id, Name WHERE Sex__c = 'Male'),
+    Contact(Id, Name)
