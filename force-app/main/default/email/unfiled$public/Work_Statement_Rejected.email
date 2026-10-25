@@ -1,0 +1,22 @@
+Dear Work Statement Owner,
+
+Your Work Statement has been rejected by the assigned approver.
+
+Work Statement Details
+
+Work Statement: {!WorkStatement__c.Name}
+
+Client: {!WorkStatement__c.Client__c}
+
+Amount: {!WorkStatement__c.Amount__c}
+
+Start Date: {!WorkStatement__c.Start_Date__c}
+
+End Date: {!WorkStatement__c.End_Date__c}
+
+Status: Rejected
+
+Please review the approver's comments in Salesforce, make the necessary corrections, and resubmit the Work Statement if required.
+
+Thank you,
+Salesforce Work Statement Management System

@@ -1,0 +1,22 @@
+Dear Work Statement Owner,
+
+Good news! Your Work Statement has been approved.
+
+Work Statement Details
+
+Work Statement: {!WorkStatement__c.Name}
+
+Client: {!WorkStatement__c.Client__c}
+
+Amount: {!WorkStatement__c.Amount__c}
+
+Start Date: {!WorkStatement__c.Start_Date__c}
+
+End Date: {!WorkStatement__c.End_Date__c}
+
+Status: Approved
+
+The approval process is complete, and the record is now available for editing according to your Salesforce permissions.
+
+Thank you,
+Salesforce Work Statement Management System

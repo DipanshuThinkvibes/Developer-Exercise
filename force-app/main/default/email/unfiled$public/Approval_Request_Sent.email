@@ -1,0 +1,22 @@
+Dear Approver,
+
+A Work Statement has been submitted and requires your review and approval.
+
+Work Statement Details
+
+Work Statement: {!WorkStatement__c.Name}
+
+Client: {!WorkStatement__c.Client__c}
+
+Amount: {!WorkStatement__c.Amount__c}
+
+Start Date: {!WorkStatement__c.Start_Date__c}
+
+End Date: {!WorkStatement__c.End_Date__c}
+
+Work Description: {!WorkStatement__c.Work_Description__c}
+
+Please review the details and approve or reject the Work Statement through Salesforce.
+
+Thank you,
+Salesforce Work Statement Management System
