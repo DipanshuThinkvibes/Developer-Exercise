@@ -4,10 +4,11 @@ trigger ContactTrigger on Contact (before insert, before update, before delete, 
         if(Trigger.isInsert ){
             ContactTriggerHandler.beforeInsert(Trigger.new);
         } 
+    }
+    else if(Trigger.isAfter){
         if(Trigger.isUpdate){
             ContactTriggerHandler.beforeUpdate(Trigger.oldMap, Trigger.new);
         }
-
     }
 
 }
