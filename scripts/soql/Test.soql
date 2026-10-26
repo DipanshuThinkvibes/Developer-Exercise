@@ -66,7 +66,7 @@ SELECT Id, Name, Domain__c,
 FROM Account;
 
 
-// Q8. Select all Consultants working with Employer 'TV'
+// Q8. All consultants who are working with ‘TV’ as their employer
 
 SELECT Id, Name
 FROM Consultant__c
@@ -75,6 +75,10 @@ WHERE Id IN (
     FROM Hiring__c
     WHERE Employer__r.Name = 'TV'
 );
+
+OR
+
+select Consultant__r.FirstName__c from Hiring__c where Account__r.Name ='TV'
 
 
 // Q9. Select all Consultants and their Employers
@@ -89,6 +93,11 @@ SELECT Id, Name,
         WHERE Position__r.Name = 'Software Engineer'
     )
 FROM Consultant__c;
+
+OR
+
+select
+Consultant__r.FirstName__c,Account__r.Name from Hiring__c where Position__r.Name ='Software Engineer'
 
 
 // Q10. Count Hiring records per Employer
