@@ -20,7 +20,7 @@ public with sharing class ContactTriggerHandler {
             List<Contact> existingPrimaryContacts = [
                 SELECT Id, AccountId
                 FROM Contact
-                WHERE AccountId IN :accountIds AND Is_Primary__c = true 
+                WHERE AccountId IN :accountIds AND Is_Primary__c = true WITH USER_MODE
             ];
             Map<Id, Contact> accountToPrimaryContactMap = new Map<Id, Contact>();
             for(Contact existingContact : existingPrimaryContacts) {
@@ -49,7 +49,7 @@ public with sharing class ContactTriggerHandler {
             List<Contact> existingPrimaryContacts = [
                 SELECT Id, AccountId
                 FROM Contact
-                WHERE AccountId IN :accountIds AND Is_Primary__c = true 
+                WHERE AccountId IN :accountIds AND Is_Primary__c = true  WITH USER_MODE
             ];
             Map<Id, Contact> accountToPrimaryContactMap = new Map<Id, Contact>();
             for(Contact existingContact : existingPrimaryContacts) {
@@ -74,8 +74,8 @@ public with sharing class ContactTriggerHandler {
              }
              
           }
-           List<AggregateResult> result = [SELECT AccountId, COUNT(Id) ContactCount FROM Contact WHERE AccountId IN :accountIds GROUP BY AccountId];
-           List<AggregateResult> oldResult = [SELECT AccountId, COUNT(Id) oldContactCount FROM Contact WHERE AccountId IN :oldContactsAccountIds GROUP BY AccountId];
+           List<AggregateResult> result = [SELECT AccountId, COUNT(Id) ContactCount FROM Contact WHERE AccountId IN :accountIds WITH USER_MODE GROUP BY AccountId ];
+           List<AggregateResult> oldResult = [SELECT AccountId, COUNT(Id) oldContactCount FROM Contact WHERE AccountId IN :oldContactsAccountIds WITH USER_MODE GROUP BY AccountId];
            Map<Id, Integer> contactCountMap = new Map<Id, Integer>();
 
            for (AggregateResult ar : result) {
@@ -129,10 +129,10 @@ public with sharing class ContactTriggerHandler {
             }
     }
         if(!accountsToUpdate.isEmpty()){
-            update accountsToUpdate;
+            update as USER accountsToUpdate;
             }
         if(!oldAccountsToUpdate.isEmpty()){
-            update oldAccountsToUpdate;
+            update as USER oldAccountsToUpdate;
         }
     }
 }
