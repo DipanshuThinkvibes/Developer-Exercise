@@ -1,0 +1,100 @@
+<apex:page controller="AccountSearchController">
+    <apex:form id="accountForm">
+
+        <!-- Section 1: Search Filters -->
+        <apex:pageBlock title="Account Search">
+
+            <apex:pageBlockSection title="Search Criteria"
+                                   columns="2">
+
+                <apex:inputText value="{!searchName}"
+                                label="Account Name"/>
+
+                <apex:inputText value="{!searchIndustry}"
+                                label="Industry"/>
+
+                <apex:inputText value="{!searchBillingCity}"
+                                label="Billing City"/>
+
+            </apex:pageBlockSection>
+
+            <apex:pageBlockButtons location="bottom">
+                <apex:commandButton value="Search"
+                                    action="{!search}"
+                                    rerender="resultsPanel"/>
+
+                <apex:commandButton value="Clear"
+                                    action="{!first}"
+                                    immediate="true"
+                                    rerender="resultsPanel"/>
+            </apex:pageBlockButtons>
+
+        </apex:pageBlock>
+
+        <!-- Section 2: Account Results -->
+        <apex:outputPanel id="resultsPanel" layout="block">
+
+            <apex:pageBlock title="Account Results"
+                            rendered="{!hasSearched}">
+
+                <apex:pageMessages />
+
+                <apex:outputText value="Total matching Accounts: {!totalRecords}"/>
+
+                <apex:pageBlockTable value="{!accounts}"
+                                     var="acc"
+                                     rendered="{!totalRecords > 0}">
+
+                    <apex:column headerValue="Account Name">
+                        <apex:outputLink value="/{!acc.Id}">
+                            {!acc.Name}
+                        </apex:outputLink>
+                    </apex:column>
+
+                    <apex:column value="{!acc.Industry}"
+                                 headerValue="Industry"/>
+
+                    <apex:column value="{!acc.Phone}"
+                                 headerValue="Phone"/>
+
+                    <apex:column value="{!acc.BillingCity}"
+                                 headerValue="Billing City"/>
+
+                </apex:pageBlockTable>
+
+                <apex:outputText value="No Accounts found for the selected filters."
+                    rendered="{!totalRecords = 0}"/>
+
+                <!-- Pagination -->
+                <apex:pageBlockButtons location="bottom">
+
+                    <apex:commandButton value="First"
+                                        action="{!first}"
+                                        disabled="{!NOT(hasPrevious)}"
+                                        rerender="resultsPanel"/>
+
+                    <apex:commandButton value="Previous"
+                                        action="{!previous}"
+                                        disabled="{!NOT(hasPrevious)}"
+                                        rerender="resultsPanel"/>
+
+                    <apex:commandButton value="Next"
+                                        action="{!next}"
+                                        disabled="{!NOT(hasNext)}"
+                                        rerender="resultsPanel"/>
+
+                    <apex:commandButton value="Last"
+                                        action="{!last}"
+                                        disabled="{!NOT(hasNext)}"
+                                        rerender="resultsPanel"/>
+
+                </apex:pageBlockButtons>
+
+                <apex:outputText value="Page {!pageNumber} of {!totalPages}"/>
+
+            </apex:pageBlock>
+
+        </apex:outputPanel>
+
+    </apex:form>
+</apex:page>
