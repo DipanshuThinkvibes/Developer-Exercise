@@ -1,0 +1,24 @@
+<apex:page standardController="Consultant__c">
+    <apex:form >
+        <apex:pageBlock title="Consultant Details">
+            <apex:pageMessages />
+
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!save}"/>
+                <apex:commandButton value="Cancel" action="{!cancel}"/>
+            </apex:pageBlockButtons>
+
+            <apex:pageBlockSection title="Consultant Information"
+                                   columns="2">
+                <apex:inputField value="{!Consultant__c.First_Name__c}"/>
+                <apex:inputField value="{!Consultant__c.Last_Name__c}"/>
+                <apex:inputField value="{!Consultant__c.DOB__c}"/>
+                <apex:outputField value="{!Consultant__c.Age__c}"/>
+                <apex:inputField value="{!Consultant__c.SEX__c}"/>
+                <apex:inputField value="{!Consultant__c.Email__c}"/>
+                <apex:inputField value="{!Consultant__c.Married__c}"/>
+                <apex:inputField value="{!Consultant__c.Education__c}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

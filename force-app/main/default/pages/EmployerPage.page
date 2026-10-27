@@ -1,0 +1,19 @@
+<apex:page standardController="Account">
+    <apex:form >
+        <apex:pageBlock title="Employer Details">
+            <apex:pageMessages />
+
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!save}"/>
+                <apex:commandButton value="Cancel" action="{!cancel}"/>
+            </apex:pageBlockButtons>
+
+            <apex:pageBlockSection title="Employer Information"
+                                   columns="2">
+                <apex:inputField value="{!Account.Name}"/>
+                <apex:inputField value="{!Account.Domain__c}"/>
+                <apex:inputField value="{!Account.HR__c}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
